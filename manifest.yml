@@ -4,5 +4,3 @@ applications:
     memory: 768M
     routes:
       - route: sampleApp-bcbs.cfapps.io
-    services: 
-      - mysqlconfig
