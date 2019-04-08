@@ -2,5 +2,6 @@
 applications: 
   - name: SampleApp-bcbs
     memory: 768M
+    path: target/sample-app-0.0.1-SNAPSHOT.jar
     routes:
       - route: sampleApp-bcbs.cfapps.io
