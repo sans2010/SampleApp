@@ -94,9 +94,9 @@ pipeline {
         stage ('KVM Updated') {
             steps {
                 echo 'Updating KVM...'
-				script {
+				//script {
 					//pushToCloudFoundry cloudSpace: 'bcbsma', credentialsId: 'pcf-cre', organization: 'Northeast / Canada', target: 'https://api.run.pivotal.io'
-				}
+				//}
             }
         }
 	}
