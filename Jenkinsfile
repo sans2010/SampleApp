@@ -15,6 +15,7 @@ pipeline {
             //}
        // }
         stage ('SampleJob - Build') {
+        agent any
         when { expression { params.ENV_DEPLOY == 'build' } }
             steps {
                 echo 'Building app...'
@@ -30,6 +31,7 @@ pipeline {
             }
         }
         stage ('SampleJob - Unit Tests') {
+        agent any
         when { expression { params.ENV_DEPLOY == 'build' } }
             steps {
                 echo 'Building app...'
@@ -45,6 +47,7 @@ pipeline {
             }
         }
 		stage('Upload to Artifactory') {
+		agent any
 		when { expression { params.ENV_DEPLOY == 'build' } }
 			steps {
 				echo 'Building app...'
@@ -68,6 +71,7 @@ pipeline {
 			}
 		}
 		stage ('Uploading to PCF') {
+		agent any
 		when { expression { params.ENV_DEPLOY == 'build' } }
             steps {
                 echo 'Uploading app...'
@@ -77,6 +81,7 @@ pipeline {
             }
         }
         stage ('Deploy Proxy') {
+        agent any
         when { expression { params.ENV_DEPLOY == 'deploy-proxy' } }
             steps {
                 echo 'Deploying proxy...'
