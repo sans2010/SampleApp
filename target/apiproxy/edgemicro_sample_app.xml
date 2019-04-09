@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="edgemicro_sandy_sample">
+    <Basepaths>/sandy/sample</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1554357972805</CreatedAt>
+    <CreatedBy>sandesh.gawali@perficient.com</CreatedBy>
+    <Description></Description>
+    <DisplayName>edgemicro_sample_app</DisplayName>
+    <LastModifiedAt>1554357972805</LastModifiedAt>
+    <LastModifiedBy>sandesh.gawali@perficient.com</LastModifiedBy>
+    <ManifestVersion>SHA-512:60a9bb7980af6731485cb524999807c12c3f79f9cfce5334cb0b78191486917e17a369b9b9668b75c74bd8d091d99754b407c0f1895a76120c28e4e602a2579b</ManifestVersion>
+    <Policies/>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources/>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+</APIProxy>
