@@ -43,7 +43,7 @@
                             <overwrite>true</overwrite>
                             <encoding>UTF-8</encoding>
                              <echo message="basedir parent : ${basedir}"/>
-                            <outputDirectory>${basedir}/target/apiproxy</outputDirectory>
+                            <outputDirectory>apiproxy</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>apiproxy</directory>
