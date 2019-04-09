@@ -91,7 +91,7 @@ pipeline {
 								if(isUnix()) {
 									sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
 								} else { 
-									bat "mvn install -f apiproxy/apigee-pom.xml -Pdev -Dusername=$SECREAT_APIGEE_USER -Dpassword=$SECREAT_APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate " 
+									bat "mvn install -f apigee/apigee-pom.xml -Pdev -Dusername=$SECREAT_APIGEE_USER -Dpassword=$SECREAT_APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate " 
 								} 
 						    
 						    
