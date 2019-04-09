@@ -86,7 +86,7 @@ pipeline {
 	            steps {
 	                echo 'Deploying proxy...'
 					script {
-						withCredentials([usernamePassword(credentialsId: 'apigee-cred', passwordVariable: 'SECREAT_APIGEE_PASSWORD', usernameVariable: 'SECREAT_APIGEE_USER')]) {
+						withCredentials([usernamePassword(credentialsId: 'apigee-sandesh', passwordVariable: 'SECREAT_APIGEE_PASSWORD', usernameVariable: 'SECREAT_APIGEE_USER')]) {
 							withMaven(maven: 'maven') { 
 								if(isUnix()) {
 									sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
