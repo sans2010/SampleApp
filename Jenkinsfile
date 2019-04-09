@@ -15,6 +15,7 @@ pipeline {
             //}
        // }
         stage ('SampleJob - Build') {
+        when { expression { params.ENV_DEPLOY == 'build' } }
             steps {
                 echo 'Building app...'
 				script {
@@ -29,6 +30,7 @@ pipeline {
             }
         }
         stage ('SampleJob - Unit Tests') {
+        when { expression { params.ENV_DEPLOY == 'build' } }
             steps {
                 echo 'Building app...'
 				script {
@@ -43,7 +45,7 @@ pipeline {
             }
         }
 		stage('Upload to Artifactory') {
-		//when { expression { params.ENV_PROMOTE == 'all' } }
+		when { expression { params.ENV_DEPLOY == 'build' } }
 			steps {
 				echo 'Building app...'
 				script{
@@ -58,8 +60,7 @@ pipeline {
 
 					  rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
 
-					  //buildInfo.retention maxBuilds: 10, maxDays: 7, deleteBuildArtifacts: true
-					  // Publish build info.
+					  
 					  artifactory_server.publishBuildInfo buildInfo
 					
 				}
@@ -76,6 +77,7 @@ pipeline {
             }
         }
         stage ('Deploy Proxy') {
+        when { expression { params.ENV_DEPLOY == 'deploy-proxy' } }
             steps {
                 echo 'Deploying proxy...'
 				script {
@@ -108,4 +110,4 @@ pipeline {
             }
         }
 	}
-}
+}}
