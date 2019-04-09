@@ -2,21 +2,18 @@ pipeline {
     agent any
 	
 	parameters{
-            
-               choice(choices: 'build\ndeploy-to-dev\ndeploy-proxy\ndeploy-to-uat', description: 'Which Env', name: 'ENV_DEPLOY')
-               
-               string(name: 'ARTIFACT_VERSION', defaultValue: '', description: 'Enter Artifact version from Artifactory.')
-               
-           }
+		choice(choices: 'build\ndeploy-to-dev\ndeploy-proxy\ndeploy-to-uat', description: 'Which Env', name: 'ENV_DEPLOY')
+		string(name: 'ARTIFACT_VERSION', defaultValue: '', description: 'Enter Artifact version from Artifactory.')
+	}
 	
     stages {
-		stage('SampleJob - Checkout') {
-			when { expression { params.ENV_DEPLOY == 'all' } }
-            steps {
-                echo 'Fetching App from Git repo'
-					checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-repo', url: '${gitCommon}/'+params.GIT_REPO_NAME+'.git']]])
-            }
-        }
+		//stage('SampleJob - Checkout') {
+			//when { expression { params.ENV_DEPLOY == 'all' } }
+            //steps {
+                //echo 'Fetching App from Git repo'
+					//checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git-repo', url: '${gitCommon}/'+params.GIT_REPO_NAME+'.git']]])
+            //}
+       // }
         stage ('SampleJob - Build') {
             steps {
                 echo 'Building app...'
