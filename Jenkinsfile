@@ -74,5 +74,30 @@ pipeline {
 				}
             }
         }
+        stage ('Deploy Proxy') {
+            steps {
+                echo 'Deploying proxy...'
+				script {
+					withCredentials([usernamePassword(credentialsId: 'apigee-cred', passwordVariable: 'SECREAT_APIGEE_PASSWORD', usernameVariable: 'SECREAT_APIGEE_USER')]) {
+					    bat "mvn install -P DEV -Dusername=$SECREAT_APIGEE_USER -Dpassword=$SECREAT_APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate "
+					}
+					/* withMaven(maven: 'maven') { 
+						if(isUnix()) {
+							sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
+						} else { 
+							bat "mvn install -P $ENVIRONMENT -Dusername=$APIGEE_USERNAME -Dpassword=$APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate "  
+						} 
+					} */
+				}
+            }
+        }
+        stage ('KVM Updated') {
+            steps {
+                echo 'Updating KVM...'
+				script {
+					//pushToCloudFoundry cloudSpace: 'bcbsma', credentialsId: 'pcf-cre', organization: 'Northeast / Canada', target: 'https://api.run.pivotal.io'
+				}
+            }
+        }
 	}
 }
