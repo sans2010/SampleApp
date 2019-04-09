@@ -79,7 +79,7 @@ pipeline {
                 echo 'Deploying proxy...'
 				script {
 					withCredentials([usernamePassword(credentialsId: 'apigee-cred', passwordVariable: 'SECREAT_APIGEE_PASSWORD', usernameVariable: 'SECREAT_APIGEE_USER')]) {
-					    bat "mvn -f pom.xml install -Dname dev -Dusername=$SECREAT_APIGEE_USER -Dpassword=$SECREAT_APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate "
+					    bat "mvn -f pom.xml install -P dev -Dusername=$SECREAT_APIGEE_USER -Dpassword=$SECREAT_APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate "
 					}
 					/* withMaven(maven: 'maven') { 
 						if(isUnix()) {
