@@ -2,8 +2,8 @@ pipeline {
     agent any
 	
 	parameters{
-		choice(choices: 'build\ndeploy-to-dev\ndeploy-proxy\ndeploy-to-uat', description: 'Which Env', name: 'ENV_DEPLOY')
-		string(name: 'ARTIFACT_VERSION', defaultValue: '', description: 'Enter Artifact version from Artifactory.')
+		choice(choices:'build\ndeploy-to-dev\ndeploy-proxy\ndeploy-to-uat',description:'Which Env',name:'ENV_DEPLOY')
+		string(name:'ARTIFACT_VERSION',defaultValue:'',description:'Enter Artifact version from Artifactory.')
 	}
 	
     stages {
