@@ -1,7 +1,7 @@
 pipeline {
     agent any
 	
-	parameters {
+	parameters{
             
                choice(choices: 'build\ndeploy-to-dev\ndeploy-proxy\ndeploy-to-uat', description: 'Which Env', name: 'ENV_DEPLOY')
                
