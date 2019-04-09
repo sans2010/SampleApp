@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 public class SpringBootTutorialBasicsApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(SpringBootTutorialBasicsApplication.class, args);
 	}
 }
