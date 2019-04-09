@@ -4,13 +4,13 @@
             "name": "dev"
         },
         {
-            "name": "test"
+            "name": "test" 
         },
         {
-            "name": "stage"
+            "name": "stage" 
         },
         {
-            "name": "prod"
+            "name": "prod" 
         }
     ]
 }
