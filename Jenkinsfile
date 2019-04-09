@@ -82,29 +82,30 @@ pipeline {
         }
         stage ('Deploy Proxy') {
         agent any
-        when { expression { params.ENV_DEPLOY == 'deploy-proxy' } }
-            steps {
-                echo 'Deploying proxy...'
-				script {
-					withCredentials([usernamePassword(credentialsId: 'apigee-cred', passwordVariable: 'SECREAT_APIGEE_PASSWORD', usernameVariable: 'SECREAT_APIGEE_USER')]) {
-						withMaven(maven: 'maven') { 
+	        when { expression { params.ENV_DEPLOY == 'deploy-proxy' } }
+	            steps {
+	                echo 'Deploying proxy...'
+					script {
+						withCredentials([usernamePassword(credentialsId: 'apigee-cred', passwordVariable: 'SECREAT_APIGEE_PASSWORD', usernameVariable: 'SECREAT_APIGEE_USER')]) {
+							withMaven(maven: 'maven') { 
+								if(isUnix()) {
+									sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
+								} else { 
+									bat "mvn install -f apiproxy/apigee-pom.xml -P dev -Dusername=$SECREAT_APIGEE_USER -Dpassword=$SECREAT_APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate " 
+								} 
+						    
+						    
+						}
+						/* withMaven(maven: 'maven') { 
 							if(isUnix()) {
 								sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
 							} else { 
-								bat "mvn install -f apiproxy/apigee-pom.xml -P dev -Dusername=$SECREAT_APIGEE_USER -Dpassword=$SECREAT_APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate " 
+								bat "mvn install -P $ENVIRONMENT -Dusername=$APIGEE_USERNAME -Dpassword=$APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate "  
 							} 
-					    
-					    
+						} */
 					}
-					/* withMaven(maven: 'maven') { 
-						if(isUnix()) {
-							sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
-						} else { 
-							bat "mvn install -P $ENVIRONMENT -Dusername=$APIGEE_USERNAME -Dpassword=$APIGEE_PASSWORD -Dorg=bcbsma -Doptions=validate "  
-						} 
-					} */
-				}
-            }
+	            }
+	        }
         }
         stage ('KVM Updated') {
             steps {
@@ -115,4 +116,4 @@ pipeline {
             }
         }
 	}
-}}
+}
