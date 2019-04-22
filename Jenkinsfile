@@ -86,7 +86,7 @@ pipeline {
         }
         stage ('Deploy Proxy') {
         agent any
-	        when { expression { params.ENV_DEPLOY == 'deploy-proxy' } }
+	        when { expression { params.ENV_DEPLOY == 'deploy-proxy-dev' } }
 	            steps {
 	                echo 'Deploying proxy...'
 					script {
@@ -113,14 +113,14 @@ pipeline {
         }
         stage ('KVM Updated') {
         agent any
-	        when { expression { params.ENV_DEPLOY == 'deploy-proxy' } }
+	        when { expression { params.ENV_DEPLOY == 'deploy-kvm-dev' } }
             steps {
                 echo 'Updating KVM...'
 				script {
 					def secretText="U2FuZGVzaC5HYXdhbGlAcGVyZmljaWVudC5jb206QXBpZ2VlQDIwMTk="
 					def filename="microgateway-router"
 					def jsonSlurper = new JsonSlurper()
-					def reader = new BufferedReader(new InputStreamReader(new FileInputStream("/apigee/microgateway-router.json"),"UTF-8"))
+					def reader = new BufferedReader(new InputStreamReader(new FileInputStream("$WORKSPACE/apigee/microgateway-router.json"),"UTF-8"))
     				def data = jsonSlurper.parse(reader)
     				echo data.name
 					//def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/$ENVIRONMENT/keyvaluemaps/microgateway-router/entries/$entryName"
