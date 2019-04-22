@@ -6,7 +6,7 @@ pipeline {
     agent any
 	
 	parameters{
-		choice(choices:'build\ndeploy-to-dev\ndeploy-proxy-dev\ndeployo-proxy-uat\ndeploy-to-uat',description:'Which Env',name:'ENV_DEPLOY')
+		choice(choices:'build\ndeploy-to-dev\ndeploy-proxy-dev\ndeploy-kvm-dev\ndeployo-proxy-uat\ndeploy-to-uat',description:'Which Env',name:'ENV_DEPLOY')
 		string(name:'ARTIFACT_VERSION',defaultValue:'',description:'Enter Artifact version from Artifactory.')
 	}
 	
@@ -112,6 +112,8 @@ pipeline {
 	        }
         }
         stage ('KVM Updated') {
+        agent any
+	        when { expression { params.ENV_DEPLOY == 'deploy-proxy' } }
             steps {
                 echo 'Updating KVM...'
 				script {
