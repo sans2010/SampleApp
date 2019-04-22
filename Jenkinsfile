@@ -119,7 +119,7 @@ pipeline {
 				script {
 					def secretText="U2FuZGVzaC5HYXdhbGlAcGVyZmljaWVudC5jb206QXBpZ2VlQDIwMTk="
 					def filename="microgateway-router"
-					def jsonSlurper = new JsonSlurper()
+					def jsonSlurper = new JsonSlurperClassic()
 					def reader = new BufferedReader(new InputStreamReader(new FileInputStream("$WORKSPACE/apigee/microgateway-router.json"),"UTF-8"))
     				def data = jsonSlurper.parse(reader)
     				echo data.name
