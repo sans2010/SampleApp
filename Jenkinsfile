@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-import groovy.json.JsonSlurperClassic
+import groovy.json.JsonSlurper
 
 pipeline {
     agent any
@@ -119,7 +119,7 @@ pipeline {
 				script {
 					def secretText="U2FuZGVzaC5HYXdhbGlAcGVyZmljaWVudC5jb206QXBpZ2VlQDIwMTk="
 					def filename="microgateway-router"
-					def jsonSlurper = new JsonSlurperClassic()
+					def jsonSlurper = new JsonSlurper()
 					def reader = new BufferedReader(new InputStreamReader(new FileInputStream("$WORKSPACE/apigee/microgateway-router.json"),"UTF-8"))
     				def data = jsonSlurper.parse(reader)
     				echo data.name
@@ -128,6 +128,7 @@ pipeline {
 					echo URL
 					bat "curl --silent --write-out 'HTTPSTATUS:%{http_code}' -X GET --header 'Authorization: Basic $secretText' $URL"
 					echo HTTP_STATUS
+					jsonSlurper = null
 				}
             }
         }
