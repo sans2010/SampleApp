@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 pipeline {
     agent any
