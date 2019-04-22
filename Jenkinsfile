@@ -1,8 +1,12 @@
+#!/usr/bin/env groovy
+
+import groovy.json.JsonSlurper
+
 pipeline {
     agent any
 	
 	parameters{
-		choice(choices:'build\ndeploy-to-dev\ndeploy-proxy\ndeploy-to-uat',description:'Which Env',name:'ENV_DEPLOY')
+		choice(choices:'build\ndeploy-to-dev\ndeploy-proxy-dev\ndeployo-proxy-uat\ndeploy-to-uat',description:'Which Env',name:'ENV_DEPLOY')
 		string(name:'ARTIFACT_VERSION',defaultValue:'',description:'Enter Artifact version from Artifactory.')
 	}
 	
@@ -110,9 +114,19 @@ pipeline {
         stage ('KVM Updated') {
             steps {
                 echo 'Updating KVM...'
-				//script {
-					//pushToCloudFoundry cloudSpace: 'bcbsma', credentialsId: 'pcf-cre', organization: 'Northeast / Canada', target: 'https://api.run.pivotal.io'
-				//}
+				script {
+					def secretText="U2FuZGVzaC5HYXdhbGlAcGVyZmljaWVudC5jb206QXBpZ2VlQDIwMTk="
+					def filename="microgateway-router"
+					def jsonSlurper = new JsonSlurper()
+					def reader = new BufferedReader(new InputStreamReader(new FileInputStream("/apigee/microgateway-router.json"),"UTF-8"))
+    				def data = jsonSlurper.parse(reader)
+    				echo data.name
+					//def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/$ENVIRONMENT/keyvaluemaps/microgateway-router/entries/$entryName"
+					def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/dev/keyvaluemaps/microgateway-router/entries/${data.name}"
+					echo URL
+					bat "curl --silent --write-out 'HTTPSTATUS:%{http_code}' -X GET --header 'Authorization: Basic $secretText' $URL"
+					echo HTTP_STATUS
+				}
             }
         }
 	}
