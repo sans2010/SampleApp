@@ -123,12 +123,12 @@ pipeline {
 					def reader = new BufferedReader(new InputStreamReader(new FileInputStream("$WORKSPACE/apigee/microgateway-router.json"),"UTF-8"))
     				def data = jsonSlurper.parse(reader)
     				echo data.name
+    				jsonSlurper = null
 					//def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/$ENVIRONMENT/keyvaluemaps/microgateway-router/entries/$entryName"
 					def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/dev/keyvaluemaps/microgateway-router/entries/${data.name}"
 					echo URL
 					bat "curl --silent --write-out 'HTTPSTATUS:%{http_code}' -X GET --header 'Authorization: Basic $secretText' $URL"
 					echo HTTP_STATUS
-					jsonSlurper = null
 				}
             }
         }
