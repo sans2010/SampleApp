@@ -42,9 +42,9 @@ pipeline {
 				script {
 					withMaven(maven: 'maven') { 
 						if(isUnix()) {
-							sh "mvn clean test -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
+							sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
 						} else { 
-							bat "mvn clean test -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "  
+							bat "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "  
 						} 
 					}
 				}
