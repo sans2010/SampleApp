@@ -39,7 +39,21 @@ pipeline {
         when { expression { params.ENV_DEPLOY == 'deploy-to-dev' } }
             steps {
                 echo 'Building app...'
-				
+				script {
+					withMaven(maven: 'maven') { 
+						if(isUnix()) {
+							//sh "mvn clean generate-resources -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "
+							sh "mvn clean test -Djacoco.skip=false -Djacoco.skip.report=false " 
+						} else { 
+							//bat "mvn clean generate-resources -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "
+							bat "mvn clean test -Djacoco.skip=false -Djacoco.skip.report=false "  
+						}
+						println "WORKSPACE = " + WORKSPACE
+						//junit '$WORKSPACE/target/surefire-reports/*.xml' 
+					}
+					println "WORKSPACE = " + WORKSPACE
+					//junit '$WORKSPACE/target/surefire-reports/*.xml'
+				}
             }
         }
 		stage('Upload to Artifactory') {
@@ -57,7 +71,7 @@ pipeline {
 					  rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: artifactory_server
 					  rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: artifactory_server
 
-					  rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
+					  rtMaven.run pom: 'pom.xml', goals: 'clean install -DskipTests', buildInfo: buildInfo
 
 					  
 					  artifactory_server.publishBuildInfo buildInfo
