@@ -122,15 +122,48 @@ pipeline {
 					def jsonSlurper = new JsonSlurper()
 					def reader = new BufferedReader(new InputStreamReader(new FileInputStream("$WORKSPACE/apigee/microgateway-router.json"),"UTF-8"))
     				def data = jsonSlurper.parse(reader)
-    				echo data.name
+    				def entryName = data.name
     				jsonSlurper = null
+    				data = null
 					//def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/$ENVIRONMENT/keyvaluemaps/microgateway-router/entries/$entryName"
-					def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/dev/keyvaluemaps/microgateway-router/entries/${data.name}"
-					echo URL
-					bat "curl --silent --write-out 'HTTPSTATUS:%{http_code}' -X GET --header 'Authorization: Basic $secretText' $URL"
-					echo HTTP_STATUS
+					def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/dev/keyvaluemaps/microgateway-router/entries/${entryName}"
+					def URL1 = "https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/dev/keyvaluemaps/microgateway-router/entries"
+				    					
+					bat 'curl -S -k --silent -X GET --header "Authorization: Basic '+secretText+'" '+URL+' --write-out "HTTPSTATUS=%%{http_code}" > result.txt'
+					applyKvm(secretText, filename, URL, URL1)
 				}
             }
         }
+	}
+}
+
+def applyKvm(String secretText, String filename, String URL, String URL1) {
+	def HTTP_RESPONSE = readFile 'result.txt'
+	//def HTTP_BODY = (HTTP_RESPONSE =~ 'HTTPSTATUS=[0-9]{3}$')
+	//println "HTTP_BODY = " + HTTP_BODY[0]
+	//def HTTP_BODY = ~'s/HTTPSTATUS\:[0-9]{3}$//'
+	//println HTTP_BODY.size()
+	//def HTTP_RESPONSE_BODY = (HTTP_RESPONSE - HTTP_BODY[0])
+	def HTTP_CODE = HTTP_RESPONSE.substring(HTTP_RESPONSE.lastIndexOf("=")+1)
+	println "HTTP_CODE = " + HTTP_CODE
+	println "filename = " + filename
+	String fileContents = new File(''+WORKSPACE+'/apigee/microgateway-router.json').text
+	//def routerContent = readFile 'apigee/microgateway-router.json'
+	fileContents = fileContents.replaceAll("\\r\\n|\\r|\\n", " ");
+	fileContents = fileContents.replace("\n", "").replace('\"', '\\"');
+	//fileContents = '{"name": "edgemicro_sample_app_1","value": "https://mocktarget.apigee.net"}'
+	println "fileContents = " + fileContents
+	if (HTTP_CODE == "200") {
+		//update an entry that already exist
+		 'curl -S -k --silent -X POST --header "Content-Type: application/json" --header "Authorization: Basic '+secretText+'" --data "'+fileContents+'" '+URL+' --write-out "HTTPSTATUS1=%%{http_code}" > result1.txt'
+		String UPDATE_RESPONSE = new File(''+WORKSPACE+'/result1.txt').text
+		//def UPDATE_RESPONSE = readFile 'result.txt'
+		println "UPDATE_RESPONSE = " + UPDATE_RESPONSE
+	} else {
+		//entry doesn’t exist create new entry
+		println "1151"
+		bat 'curl -S -k --silent -X POST --header "Content-Type: application/json" --header "Authorization: Basic '+secretText+'" --data "'+fileContents+'" '+URL1+' --write-out "HTTPSTATUS2=%%{http_code}" > result2.txt'
+		String CREATE_RESPONSE = new File(''+WORKSPACE+'/result2.txt').text
+		println "CREATE_RESPONSE = " + CREATE_RESPONSE
 	}
 }
