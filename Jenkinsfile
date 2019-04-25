@@ -42,9 +42,11 @@ pipeline {
 				script {
 					withMaven(maven: 'maven') { 
 						if(isUnix()) {
-							sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
+							//sh "mvn clean generate-resources -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "
+							sh "mvn clean test -Djacoco.skip=false -Djacoco.skip.report=false " 
 						} else { 
-							bat "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "  
+							//bat "mvn clean generate-resources -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "
+							bat "mvn clean test -Djacoco.skip=false -Djacoco.skip.report=false "  
 						}
 						println "WORKSPACE = " + WORKSPACE
 						//junit '$WORKSPACE/target/surefire-reports/*.xml' 
@@ -73,7 +75,7 @@ pipeline {
 
 					  
 					  artifactory_server.publishBuildInfo buildInfo
-					junit '/target/surefire-reports/*.xml'
+					//junit '/target/surefire-reports/*.xml'
 				}
 			
 			}
