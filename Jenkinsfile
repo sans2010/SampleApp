@@ -125,6 +125,7 @@ pipeline {
     				def entryName = data.name
     				jsonSlurper = null
     				data = null
+    				reader = null
 					//def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/$ENVIRONMENT/keyvaluemaps/microgateway-router/entries/$entryName"
 					def URL="https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/dev/keyvaluemaps/microgateway-router/entries/${entryName}"
 					def URL1 = "https://api.enterprise.apigee.com/v1/organizations/bcbsma/environments/dev/keyvaluemaps/microgateway-router/entries"
