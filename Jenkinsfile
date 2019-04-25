@@ -52,7 +52,7 @@ pipeline {
         }
 		stage('Upload to Artifactory') {
 		agent any
-		when { expression { params.ENV_DEPLOY == 'build' } }
+		when { expression { params.ENV_DEPLOY == 'deploy-to-dev' } }
 			steps {
 				echo 'Building app...'
 				script{
@@ -76,7 +76,7 @@ pipeline {
 		}
 		stage ('Uploading to PCF') {
 		agent any
-		when { expression { params.ENV_DEPLOY == 'build' } }
+		when { expression { params.ENV_DEPLOY == 'deploy-to-dev' } }
             steps {
                 echo 'Uploading app...'
 				script {
