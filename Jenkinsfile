@@ -45,7 +45,8 @@ pipeline {
 							sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
 						} else { 
 							bat "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "  
-						} 
+						}
+						junit '$WORKSPACE/target/surefire-reports/*.xml' 
 					}
 				}
             }
