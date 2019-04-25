@@ -46,8 +46,10 @@ pipeline {
 						} else { 
 							bat "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "  
 						}
-						junit '$WORKSPACE/target/surefire-reports/*.xml' 
+						println "WORKSPACE = " + WORKSPACE
+						//junit '$WORKSPACE/target/surefire-reports/*.xml' 
 					}
+					println "WORKSPACE = " + WORKSPACE
 				}
             }
         }
