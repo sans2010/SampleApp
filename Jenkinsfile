@@ -50,7 +50,7 @@ pipeline {
 						//junit '$WORKSPACE/target/surefire-reports/*.xml' 
 					}
 					println "WORKSPACE = " + WORKSPACE
-					junit '$WORKSPACE/target/surefire-reports/*.xml'
+					//junit '$WORKSPACE/target/surefire-reports/*.xml'
 				}
             }
         }
