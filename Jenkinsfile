@@ -6,7 +6,7 @@ pipeline {
     agent any
 	
 	parameters{
-		choice(choices:'build\ndeploy-to-dev\ndeploy-proxy-dev\ndeploy-kvm-dev\ndeployo-proxy-uat\ndeploy-to-uat',description:'Which Env',name:'ENV_DEPLOY')
+		choice(choices:'deploy-to-dev\ndeploy-proxy-dev\ndeploy-kvm-dev',description:'Which Env',name:'ENV_DEPLOY')
 		string(name:'ARTIFACT_VERSION',defaultValue:'',description:'Enter Artifact version from Artifactory.')
 	}
 	
@@ -20,7 +20,7 @@ pipeline {
        // }
         stage ('SampleJob - Build') {
         agent any
-        when { expression { params.ENV_DEPLOY == 'build' } }
+        when { expression { params.ENV_DEPLOY == 'deploy-to-dev' } }
             steps {
                 echo 'Building app...'
 				script {
@@ -36,15 +36,15 @@ pipeline {
         }
         stage ('SampleJob - Unit Tests') {
         agent any
-        when { expression { params.ENV_DEPLOY == 'build' } }
+        when { expression { params.ENV_DEPLOY == 'deploy-to-dev' } }
             steps {
                 echo 'Building app...'
 				script {
 					withMaven(maven: 'maven') { 
 						if(isUnix()) {
-							sh "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
+							sh "mvn clean test -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false " 
 						} else { 
-							bat "mvn clean install -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "  
+							bat "mvn clean test -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "  
 						} 
 					}
 				}
