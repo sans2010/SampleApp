@@ -73,7 +73,7 @@ pipeline {
 
 					  
 					  artifactory_server.publishBuildInfo buildInfo
-					
+					junit '$WORKSPACE/target/surefire-reports/*.xml'
 				}
 			
 			}
