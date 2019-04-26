@@ -23,15 +23,7 @@ pipeline {
         when { expression { params.ENV_DEPLOY == 'deploy-to-dev' } }
             steps {
                 echo 'Building app...'
-				script {
-					withMaven(maven: 'maven') { 
-						if(isUnix()) {
-							sh "mvn clean install -DskipTests " 
-						} else { 
-							bat "mvn clean install -DskipTests " 
-						} 
-					}
-				}
+				
             }
         }
         stage ('SampleJob - Unit Tests') {
