@@ -49,6 +49,7 @@ pipeline {
 						} else { 
 							//bat "mvn clean generate-resources -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "
 							bat "${mvnHome}/bin/mvn clean test -Djacoco.skip=false -Djacoco.skip.report=false "  
+							jacoco()
 						}
 						println "WORKSPACE = " + WORKSPACE
 						//junit '$WORKSPACE/target/surefire-reports/*.xml' 
