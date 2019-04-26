@@ -23,7 +23,16 @@ pipeline {
         when { expression { params.ENV_DEPLOY == 'deploy-to-dev' } }
             steps {
                 echo 'Building app...'
-				
+				script {
+					mvnHome = tool 'M3'
+					//withMaven(maven: 'maven') { 
+						if(isUnix()) {
+							sh "mvn clean install -DskipTests " 
+						} else { 
+							bat "${mvnHome}/bin/mvn clean install -DskipTests " 
+						} 
+					//}
+				}
             }
         }
         stage ('SampleJob - Unit Tests') {
