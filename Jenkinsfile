@@ -165,7 +165,7 @@ def applyKvm(String secretText, String filename, String URL, String URL1) {
 	println "fileContents = " + fileContents
 	if (HTTP_CODE == "200") {
 		//update an entry that already exist
-		 'curl -S -k --silent -X POST --header "Content-Type: application/json" --header "Authorization: Basic '+secretText+'" --data "'+fileContents+'" '+URL+' --write-out "HTTPSTATUS1=%%{http_code}" > result1.txt'
+		bat 'curl -S -k --silent -X POST --header "Content-Type: application/json" --header "Authorization: Basic '+secretText+'" --data "'+fileContents+'" '+URL+' --write-out "HTTPSTATUS1=%%{http_code}" > result1.txt'
 		String UPDATE_RESPONSE = new File('result1.txt').text
 		//def UPDATE_RESPONSE = readFile 'result.txt'
 		println "UPDATE_RESPONSE = " + UPDATE_RESPONSE
