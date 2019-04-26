@@ -2,11 +2,11 @@
 <Manifest name="manifest">
     <Policies/>
     <ProxyEndpoints>
-        <VersionInfo resourceName="default" version="SHA-512:b2efb23c984ae3c84184b9c69cb3a96e79d26b1434a0b959a8df2e1a94e4154c507565a8a25f321b33d2935fd0c464867dc29505aa98e1796661b7b988f49722"/>
+        <VersionInfo resourceName="default" version="SHA-512:6cb8dbbe0b75bde872ad75c600d13b0767277f17087d9881158dbe9c6864288e9d4d1003d3af8ceb204432157c75493552a19acdad4824acdf664e471af632d6"/>
     </ProxyEndpoints>
     <Resources/>
     <SharedFlows/>
     <TargetEndpoints>
-        <VersionInfo resourceName="default" version="SHA-512:cc83272c4469d80ae4df20784332ae0146d4fe181184c27d72a464bbf1295e36b66a60067d925ea9efd75aa2e968b200ee97609f539febaef8999398ec177796"/>
+        <VersionInfo resourceName="default" version="SHA-512:51def6e843fe23a077778d5ecf8095cbe8fa28c60b1c7a57dcda04db221975c6ba20cd90b544517603c0e88e4f335cfcf2637916213b61aece02a78c152a32b4"/>
     </TargetEndpoints>
 </Manifest>
