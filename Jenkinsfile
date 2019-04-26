@@ -41,17 +41,18 @@ pipeline {
             steps {
                 echo 'Building app...'
 				script {
-					withMaven(maven: 'maven') { 
+					mvnHome = tool 'maven'
+					//withMaven(maven: 'maven') { 
 						if(isUnix()) {
 							//sh "mvn clean generate-resources -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "
 							sh "mvn clean test -Djacoco.skip=false -Djacoco.skip.report=false " 
 						} else { 
 							//bat "mvn clean generate-resources -DskipTests -Djacoco.skip=false -Djacoco.skip.report=false "
-							bat "mvn clean test -Djacoco.skip=false -Djacoco.skip.report=false "  
+							bat "${mvnHome}/bin/mvn clean test -Djacoco.skip=false -Djacoco.skip.report=false "  
 						}
 						println "WORKSPACE = " + WORKSPACE
 						//junit '$WORKSPACE/target/surefire-reports/*.xml' 
-					}
+					//}
 					println "WORKSPACE = " + WORKSPACE
 					//junit '$WORKSPACE/target/surefire-reports/*.xml'
 				}
