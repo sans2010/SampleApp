@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo 'Building app...'
 				script {
-					mvnHome = tool 'M3'
+					mvnHome = tool 'maven'
 					//withMaven(maven: 'maven') { 
 						if(isUnix()) {
 							sh "mvn clean install -DskipTests " 
