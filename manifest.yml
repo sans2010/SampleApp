@@ -2,6 +2,6 @@
 applications: 
   - name: bcbs-devops-demo
     memory: 768M
-    path: target/sample-app-0.0.2-SNAPSHOT.jar
+    path: target/sample-app-0.0.2.jar
     routes:
       - route: bcbs-devops-demo.cfapps.io
